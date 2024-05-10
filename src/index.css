@@ -1,0 +1,26 @@
+:root {
+  color: #FCFCFC;
+  background-color: #0F100B;
+  background: radial-gradient(#0F100B, #0F100B, #0F100B,#12130d);
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+.noise::before{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  content: "";
+  opacity: .01;  
+  z-index: 1;
+  pointer-events: none;
+  background: url(../src/assets/noise.gif);
+}
