@@ -1,7 +1,6 @@
 :root {
   color: #FCFCFC;
-  background-color: #0F100B;
-  background: radial-gradient(#0F100B, #0F100B, #0F100B,#12130d);
+  background-color: #0F0F0F;
 }
 
 body {
@@ -20,7 +19,7 @@ body {
   height: 100vh;
   content: "";
   opacity: .01;  
-  z-index: 1;
+  z-index: 3;
   pointer-events: none;
   background: url(../src/assets/noise.gif);
 }

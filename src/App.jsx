@@ -1,72 +1,117 @@
 import './App.css'
-import parkingMap from './assets/parkingMapModel.png'
-import { useState, useEffect } from 'react'
-
-function useDateTime() {
-  const [date, setDate] = useState(new Date().toLocaleDateString())
-  const [time, setTime] = useState(new Date().toLocaleTimeString())
-
-  useEffect(() => {
-    const tick = () => {
-      const now = new Date()
-      const newDate = now.toLocaleDateString()
-      const newTime = now.toLocaleTimeString()
-
-      if (date !== newDate) {
-        setDate(newDate)
-      }
-
-      if (time !== newTime) {
-        setTime(newTime)
-      }
-
-      setTimeout(tick, 1000)
-    }
-
-    tick()
-  }, [date, time])
-
-  return { date, time }
-}
+import Header from './components/Header.jsx'
+import parkingMap from './assets/parking-map.png'
+import CarDisabilitiesIcon from './assets/CarDisabilitiesIcon.jsx'
+import CarIcon from './assets/CarIcon.jsx'
+import CircleIcon from './assets/CircleIcon.jsx'
+import { useState } from 'react'
 
 function App() {
-  const { date, time } = useDateTime()
+  const [selectedCarPlace, setSelectedCarPlace] = useState(false)
+
+  const buttonClasses = ['column-2', 'column-4', 'column-6', 'column-8']
+
+  const carPlaces = [
+    { id: 1, state: true, type: 'general' },
+    { id: 2, state: true, type: 'general' },
+    { id: 3, state: false, type: 'general' },
+    { id: 4, state: true, type: 'disabilities' }
+  ]
+
+  const handleCarState = (id) => {
+    setSelectedCarPlace(carPlaces[id])
+  }
+
+  const generalPlaces = carPlaces.filter(
+    (place) => place.type === 'general' && place.state
+  ).length
+
+  const disabilitiesPlaces = carPlaces.filter(
+    (place) => place.type === 'disabilities' && place.state
+  ).length
 
   return (
-    <div>
-      <div className='noise'></div>
-      <header className='header'>
-        <h1 className='tittle'>Estacionamiento IOT</h1>
-      </header>
-      <div className='container'>
-        {' '}
-        <section className='map-container'>
-          <div className='in-flex-data'>
-            <div className='in-grid-data'>
-              <div className='grid-container'>
-                <div className='content'>
-                  <p className='top-buttom-text'>ESTACIONAMIENTO IOT</p>
-                  <h1 className='tittle-text'>LUGARES DISPONIBLES: 1</h1>
-                </div>
-                <div className='content-date-time'>
-                  <p className='date-time-text'>{date}</p>
-                  <p className='date-time-text'>{time}</p>
-                </div>
+    <div className='container'>
+      <Header />
+      <main>
+        <section>
+          <dir className='data-container'>
+            <div className='in-data-container available-places-container '>
+              <div className='available-places'>
+                <h1>lugares generales: {generalPlaces}</h1>
               </div>
-              <div className='content-buttom'>
-                <p className='top-buttom-text'>
-                  LOCALIZACIÓN ACTUAL: Colima, Col. México
-                </p>
+              <div className='available-places'>
+                <h1>lugares de discapacitados: {disabilitiesPlaces}</h1>
               </div>
             </div>
-          </div>
-          <div className='in-flex-map'>
-            <div className='img-container'>
-              <img src={parkingMap} alt='' className='parking-map-image' />
+            <div className='in-data-container indications'>
+              <ul>
+                <li>
+                  <CircleIcon className={'info-icon busy-place'} />
+                  <p>lugar ocupado</p>
+                </li>
+                <li>
+                  <CircleIcon className={'info-icon general-place'} />
+                  <p className='free-place'>libre</p> <p> - lugar general</p>
+                </li>
+                <li>
+                  <CircleIcon className={'info-icon disabilities-place'} />
+                  <p className='free-place'>libre</p>
+                  <p> - lugar para discapacitados</p>
+                </li>
+              </ul>
+            </div>
+          </dir>
+        </section>
+        <section>
+          <div className='map-container'>
+            <div className='car-info'>
+              {carPlaces.map((carPlace) => (
+                <div
+                  key={carPlace.id}
+                  className={`in-car-info ${buttonClasses[carPlace.id - 1]}`}
+                >
+                  {selectedCarPlace && selectedCarPlace.id === carPlace.id && (
+                    <p>{selectedCarPlace.state ? 'Libre' : 'Ocupado'}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+            <img
+              src={parkingMap}
+              alt='parking map image'
+              className='parking-map-image'
+            />
+            <div className='icons-box'>
+              {carPlaces.map((carPlace) => (
+                <div
+                  key={carPlace.id}
+                  className={buttonClasses[carPlace.id - 1]}
+                >
+                  <button
+                    // onClick={() => handleCarState(carPlace.id - 1)}
+                    onMouseEnter={() => handleCarState(carPlace.id - 1)}
+                  >
+                    {carPlace.type === 'general' ? (
+                      <CarIcon
+                        className={`car-icon ${
+                          carPlace.state ? 'general-place' : 'busy-place'
+                        }`}
+                      />
+                    ) : (
+                      <CarDisabilitiesIcon
+                        className={`car-icon ${
+                          carPlace.state ? 'disabilities-place' : 'busy-place'
+                        }`}
+                      />
+                    )}
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
         </section>
-      </div>
+      </main>
     </div>
   )
 }

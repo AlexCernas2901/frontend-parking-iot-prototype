@@ -1,0 +1,38 @@
+.top-data-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.tittle-box {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.top-buttom-text {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #525856;
+}
+
+.date-time-text {
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: #C2CFA1;
+  margin-left: 5px;
+  font-weight: 100;
+}
+
+.date-time-box {
+  line-height: 1;
+  margin-bottom: 1.6px;
+}
+
+.tittle-text {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
