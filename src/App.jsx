@@ -9,13 +9,12 @@ import { useState } from 'react'
 function App() {
   const [selectedCarPlace, setSelectedCarPlace] = useState(false)
 
-  const buttonClasses = ['column-2', 'column-4', 'column-6', 'column-8']
+  const buttonClasses = ['column-3', 'column-5', 'column-7']
 
   const carPlaces = [
     { id: 1, state: true, type: 'general' },
     { id: 2, state: true, type: 'general' },
-    { id: 3, state: false, type: 'general' },
-    { id: 4, state: true, type: 'disabilities' }
+    { id: 3, state: true, type: 'disabilities' }
   ]
 
   const handleCarState = (id) => {
